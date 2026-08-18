@@ -11,15 +11,52 @@ body {
   background-color: #F8FAFC;
   font-family: var(--font-sans);
   overflow-x: hidden;
+  scroll-behavior: smooth;
 }
 
-/* Accessible custom focus indicators */
+/* Glassmorphism helpers */
+.glass-panel {
+  background: rgba(10, 20, 40, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.glass-card-light {
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(226, 232, 240, 0.8);
+}
+
+/* Metallic gold text gradient */
+.text-gold-gradient {
+  background: linear-gradient(135deg, #FFF099 0%, #FACC15 40%, #EAB308 70%, #CA8A04 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Custom smooth scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #0A1428;
+}
+::-webkit-scrollbar-thumb {
+  background: #1E355E;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #2563EB;
+}
+
+/* Focus styles */
 *:focus-visible {
-  outline: 2px solid #2563EB;
+  outline: 2px solid #EAB308;
   outline-offset: 2px;
 }
 
-/* Reduced motion preference override */
 @media (prefers-reduced-motion: reduce) {
   *,
   ::before,
