@@ -629,7 +629,7 @@ export const servicesData: ServiceItem[] = [
     verified: false,
     featured: false,
     isAdvisoryConfirmationRequired: true,
-    overview: 'Prepare for post-professional financial independence. Learn how guaranteed yield deposits and structured plans help maintain financial security in later years.',
+    overview: 'Prepare for post-professional financial independence. Learn how term deposits and structured plans help maintain financial security in later years.',
     useCases: [
       'Calculating future retirement income requirements',
       'Structuring conservative income streams for senior citizens'

@@ -20,20 +20,20 @@ export default function HomePage() {
       {/* 01. Hero Section */}
       <HeroSection />
 
-      {/* 02. Trust Strip Pillars */}
+      {/* 02. Factual Trust Strip */}
       <TrustStrip />
 
-      {/* 03. Big Statement Section */}
+      {/* 03. Big Human Statement */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12 border-b border-slate-200/80">
         <div className="max-w-4xl space-y-4">
           <span className="text-xs font-mono tracking-widest text-royal-600 uppercase font-bold">
-            OUR APPROACH
+            OUR PURPOSE
           </span>
           <h2 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-navy-950 tracking-tight leading-[1.12]">
-            Big financial decisions don&apos;t need to feel complicated.
+            Big financial decisions deserve clear guidance.
           </h2>
           <p className="text-slate-600 text-base md:text-xl leading-relaxed font-normal pt-2">
-            From choosing a home-loan structure to understanding business funding options, we help you navigate the next step with clearer information and personalized guidance.
+            From choosing a home-loan structure to understanding funding options, we help you navigate the next step with clearer information and personalized service.
           </p>
         </div>
       </section>
@@ -41,17 +41,17 @@ export default function HomePage() {
       {/* 04. Pathway Selector ("What are you planning?") */}
       <PathwaySelector />
 
-      {/* 05. Service Architecture (Editorial Explorer) */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+      {/* 05. Service Architecture (Editorial Category Rows) */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10" id="solutions">
         <div className="max-w-3xl space-y-3">
           <span className="text-xs font-mono tracking-widest text-royal-600 uppercase font-bold">
             SERVICE ARCHITECTURE
           </span>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-navy-950 tracking-tight">
-            Solutions built around your financial priorities.
+            Solutions built around your requirements.
           </h2>
           <p className="text-slate-600 text-sm md:text-base leading-relaxed">
-            Explore property finance, personal & commercial funding, deposit options, and advisory services tailored to your applicant profile.
+            Explore property finance, personal & commercial funding, deposit options, and advisory services.
           </p>
         </div>
 
@@ -66,18 +66,18 @@ export default function HomePage() {
         />
       </section>
 
-      {/* 07. How It Works Progressive Timeline */}
+      {/* 07. How It Works Timeline ("A clear path from enquiry to decision.") */}
       <section className="bg-slate-50 py-16 md:py-24 border-y border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
           <div className="max-w-3xl space-y-3">
             <span className="text-xs font-mono tracking-widest text-royal-600 uppercase font-bold">
-              HOW IT WORKS
+              PROCESS TIMELINE
             </span>
             <h2 className="text-3xl sm:text-4xl font-extrabold text-navy-950 tracking-tight">
-              A clear 4-step journey
+              A clear path from enquiry to decision
             </h2>
             <p className="text-slate-600 text-sm md:text-base">
-              We reduce intimidation around borrowing and financial documentation.
+              We reduce complexity around borrowing and financial documentation.
             </p>
           </div>
 
@@ -85,14 +85,14 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 08. Human Story (Managing Director Profile) */}
+      {/* 08. Human Point of Contact (Managing Director Section) */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
         <div className="max-w-3xl space-y-2">
           <span className="text-xs font-mono tracking-widest text-royal-600 uppercase font-bold">
             LEADERSHIP
           </span>
           <h2 className="text-2xl sm:text-3xl font-extrabold text-navy-950">
-            A partner for your banking & financial decisions
+            A human point of contact
           </h2>
         </div>
 
@@ -102,17 +102,17 @@ export default function HomePage() {
       {/* 09. Core Principles ("Why Royal Returns") */}
       <WhyUsSection />
 
-      {/* 10. Dark Climax Emotional CTA */}
-      <section className="bg-navy-950 text-white py-16 md:py-24 border-y border-navy-800 relative overflow-hidden">
+      {/* 10. Closing CTA Section */}
+      <section className="bg-navy-950 text-white py-16 md:py-24 border-y border-navy-900 relative overflow-hidden">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
           <span className="text-xs font-mono tracking-widest text-gold-400 uppercase font-bold">
-            NEXT STEP
+            GET STARTED
           </span>
           <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-white leading-tight">
-            Your next financial decision starts here.
+            Have a financial requirement?<br />Let&apos;s talk.
           </h2>
           <p className="text-slate-300 text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
-            Discuss your requirements with our team in Akkulam, Thiruvananthapuram for transparent profile assessment.
+            Discuss your requirements with our team in Akkulam, Thiruvananthapuram for transparent profile evaluation.
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
@@ -136,7 +136,7 @@ export default function HomePage() {
       </section>
 
       {/* 11. Two-Column Editorial FAQ */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" id="faq">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
           
           <div className="lg:col-span-4 space-y-4">
@@ -163,18 +163,16 @@ export default function HomePage() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
           
           {/* Contact Details (Col 1 to 5) */}
-          <div className="lg:col-span-5 space-y-6 bg-slate-900 text-white rounded-3xl p-8 border border-slate-800 shadow-xl">
+          <div className="lg:col-span-5 space-y-6 bg-navy-950 text-white rounded-3xl p-8 border border-navy-900 shadow-xl">
             <div>
               <span className="text-xs font-mono tracking-widest text-gold-400 uppercase font-bold block mb-1">
-                GET IN TOUCH
+                LOCATION & DETAILS
               </span>
-              <h3 className="text-2xl font-extrabold text-white">Contact Royal Returns</h3>
-              <p className="text-slate-400 text-sm mt-2 leading-relaxed">
-                Reach out to discuss your loan or savings requirement with our advisory team.
-              </p>
+              <h3 className="text-2xl font-extrabold text-white">ROYAL RETURNS</h3>
+              <p className="text-royal-300 font-bold text-xs uppercase tracking-wider">Financial Solutions</p>
             </div>
 
-            <div className="space-y-4 pt-4 border-t border-slate-800 text-sm">
+            <div className="space-y-4 pt-4 border-t border-navy-900 text-sm">
               <div className="flex items-start gap-3">
                 <MapPin className="w-5 h-5 text-gold-400 mt-1 flex-shrink-0" />
                 <div>
@@ -204,8 +202,8 @@ export default function HomePage() {
               </div>
             </div>
 
-            <div className="pt-4 border-t border-slate-800">
-              <h4 className="text-xs font-mono text-slate-400 uppercase tracking-widest mb-2">
+            <div className="pt-4 border-t border-navy-900">
+              <h4 className="text-xs font-mono text-slate-400 uppercase tracking-widest mb-1">
                 Managing Director
               </h4>
               <p className="text-sm font-bold text-white">{companyData.managingDirector.name}</p>
