@@ -60,15 +60,17 @@ export interface FAQItem {
   category?: string;
 }
 
-export interface LeadFormData {
+export interface ContactFormData {
   fullName: string;
   phone: string;
   email: string;
   location: string;
-  serviceInterested: string;
-  requirementAmount: string;
+  serviceSlug: string;
+  loanAmount: string;
   employmentType: string;
   preferredContactMethod: string;
   message: string;
-  disclaimerAccepted: boolean;
+  consentDisclaimer: boolean;
 }
+
+export type LeadFormData = ContactFormData;

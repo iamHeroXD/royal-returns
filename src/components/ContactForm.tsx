@@ -1,10 +1,9 @@
 'use client';
 
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useState, useId } from 'react';
 import { servicesData } from '@/data/servicesData';
-import { LeadFormData } from '@/types';
-import { Send, CheckCircle2, AlertCircle, Loader2, ShieldCheck, Sparkles } from 'lucide-react';
+import { ContactFormData } from '@/types';
+import { Send, CheckCircle2, AlertCircle, Loader2 } from 'lucide-react';
 
 interface ContactFormProps {
   defaultServiceSlug?: string;
@@ -14,69 +13,67 @@ interface ContactFormProps {
 
 export const ContactForm: React.FC<ContactFormProps> = ({
   defaultServiceSlug = '',
-  title = 'Request a Confidential Consultation',
-  subtitle = 'Share your requirement and our team will get in touch to discuss suitable financial options.',
+  title = 'Discuss Your Requirement',
+  subtitle = 'Share your details and our team in Akkulam, Thiruvananthapuram will get in touch for a transparent evaluation.',
 }) => {
-  const defaultServiceMatch = servicesData.find((s) => s.slug === defaultServiceSlug);
+  const nameId = useId();
+  const phoneId = useId();
+  const emailId = useId();
+  const locationId = useId();
+  const serviceId = useId();
+  const amountId = useId();
+  const employmentId = useId();
+  const methodId = useId();
+  const messageId = useId();
+  const consentId = useId();
 
-  const [formData, setFormData] = useState<LeadFormData>({
+  const activeServices = servicesData.filter((s) => s.enabled);
+
+  const [formData, setFormData] = useState<ContactFormData>({
     fullName: '',
     phone: '',
     email: '',
-    location: '',
-    serviceInterested: defaultServiceMatch ? defaultServiceMatch.name : 'Home Loan',
-    requirementAmount: '',
+    location: 'Thiruvananthapuram',
+    serviceSlug: defaultServiceSlug,
+    loanAmount: '',
     employmentType: 'Salaried',
     preferredContactMethod: 'Phone',
     message: '',
-    disclaimerAccepted: false,
+    consentDisclaimer: false,
   });
 
-  const [errors, setErrors] = useState<Partial<Record<keyof LeadFormData, string>>>({});
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const [submitError, setSubmitError] = useState<string | null>(null);
+  const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
+  const [errorMessage, setErrorMessage] = useState<string>('');
 
-  const validate = (): boolean => {
-    const newErrors: Partial<Record<keyof LeadFormData, string>> = {};
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value, type } = e.target;
+    const val = type === 'checkbox' ? (e.target as HTMLInputElement).checked : value;
 
-    if (!formData.fullName.trim()) {
-      newErrors.fullName = 'Please enter your full name.';
-    }
-
-    if (!formData.phone.trim()) {
-      newErrors.phone = 'Please enter a valid phone number.';
-    } else if (!/^[0-9+\s-]{8,15}$/.test(formData.phone.trim())) {
-      newErrors.phone = 'Please enter a valid 10-digit phone number.';
-    }
-
-    if (!formData.email.trim()) {
-      newErrors.email = 'Please enter your email address.';
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email.trim())) {
-      newErrors.email = 'Please enter a valid email address.';
-    }
-
-    if (!formData.location.trim()) {
-      newErrors.location = 'Please enter your city/location.';
-    }
-
-    if (!formData.disclaimerAccepted) {
-      newErrors.disclaimerAccepted = 'You must acknowledge the disclaimer to proceed.';
-    }
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: val,
+    }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitError(null);
 
-    if (!validate()) {
+    if (!formData.fullName.trim() || !formData.phone.trim()) {
+      setStatus('error');
+      setErrorMessage('Please enter your Name and Phone Number.');
       return;
     }
 
-    setIsSubmitting(true);
+    if (!formData.consentDisclaimer) {
+      setStatus('error');
+      setErrorMessage('Please acknowledge the disclosure checkbox before submitting.');
+      return;
+    }
+
+    setStatus('submitting');
+    setErrorMessage('');
 
     try {
       const response = await fetch('/api/contact', {
@@ -88,286 +85,264 @@ export const ContactForm: React.FC<ContactFormProps> = ({
       const data = await response.json();
 
       if (response.ok && data.success) {
-        setIsSubmitted(true);
+        setStatus('success');
       } else {
-        setSubmitError(data.message || 'Unable to submit enquiry. Please try again or call us directly.');
+        setStatus('error');
+        setErrorMessage(data.error || 'Failed to submit enquiry. Please try again.');
       }
     } catch (err) {
-      setSubmitError('Network error occurred. Please call +91 96332 70901 directly.');
-    } finally {
-      setIsSubmitting(false);
+      setStatus('error');
+      setErrorMessage('A network error occurred. Please try again or call us directly.');
     }
   };
 
   return (
-    <div className="bg-white rounded-3xl shadow-xl border border-slate-200/90 p-6 md:p-10 relative overflow-hidden">
-      
-      {/* Header */}
-      <div className="mb-8">
-        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-royal-50 text-royal-700 font-extrabold text-xs uppercase tracking-wider mb-2">
-          <Sparkles className="w-3.5 h-3.5" />
-          <span>Priority Consultation</span>
-        </div>
-        <h2 className="text-2xl md:text-3xl font-extrabold text-navy-950 tracking-tight">{title}</h2>
-        <p className="text-slate-600 text-sm mt-1">{subtitle}</p>
+    <div className="bg-white rounded-2xl sm:rounded-3xl p-5 sm:p-8 md:p-10 border border-slate-200 shadow-md">
+      <div className="mb-6 space-y-1">
+        <h3 className="text-xl sm:text-2xl font-extrabold text-navy-950">{title}</h3>
+        <p className="text-slate-600 text-xs sm:text-sm leading-relaxed">{subtitle}</p>
       </div>
 
-      <AnimatePresence mode="wait">
-        {isSubmitted ? (
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0 }}
-            className="bg-emerald-50/90 border border-emerald-200 rounded-2xl p-8 text-center space-y-4"
+      {status === 'success' ? (
+        <div className="p-6 bg-emerald-50 border border-emerald-200 rounded-2xl text-center space-y-3">
+          <CheckCircle2 className="w-10 h-10 text-emerald-600 mx-auto" />
+          <h4 className="font-extrabold text-navy-950 text-lg">Enquiry Received</h4>
+          <p className="text-slate-700 text-xs sm:text-sm max-w-md mx-auto leading-relaxed">
+            Thank you, <strong>{formData.fullName}</strong>. Our advisory team in Akkulam will review your requirement and reach out via {formData.preferredContactMethod}.
+          </p>
+          <button
+            onClick={() => {
+              setStatus('idle');
+              setFormData({
+                fullName: '',
+                phone: '',
+                email: '',
+                location: 'Thiruvananthapuram',
+                serviceSlug: '',
+                loanAmount: '',
+                employmentType: 'Salaried',
+                preferredContactMethod: 'Phone',
+                message: '',
+                consentDisclaimer: false,
+              });
+            }}
+            className="text-xs font-extrabold text-royal-600 underline pt-2"
           >
-            <div className="w-16 h-16 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto shadow-sm">
-              <CheckCircle2 className="w-10 h-10" />
+            Submit Another Enquiry
+          </button>
+        </div>
+      ) : (
+        <form onSubmit={handleSubmit} className="space-y-4 text-xs sm:text-sm">
+          
+          {/* Error Message Alert */}
+          {status === 'error' && (
+            <div className="p-3.5 bg-red-50 border border-red-200 rounded-xl text-red-700 text-xs flex items-start gap-2">
+              <AlertCircle className="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" />
+              <span>{errorMessage}</span>
             </div>
-            <h3 className="text-xl font-extrabold text-emerald-950">Thank You! Your Enquiry Has Been Received.</h3>
-            <p className="text-emerald-800 text-sm max-w-lg mx-auto leading-relaxed font-medium">
-              Royal Returns will review your requirement and contact you at <strong className="text-emerald-950">{formData.phone}</strong> or <strong className="text-emerald-950">{formData.email}</strong> to discuss suitable next steps.
-            </p>
-            <button
-              onClick={() => {
-                setIsSubmitted(false);
-                setFormData({
-                  fullName: '',
-                  phone: '',
-                  email: '',
-                  location: '',
-                  serviceInterested: 'Home Loan',
-                  requirementAmount: '',
-                  employmentType: 'Salaried',
-                  preferredContactMethod: 'Phone',
-                  message: '',
-                  disclaimerAccepted: false,
-                });
-              }}
-              className="inline-flex items-center gap-2 bg-navy-950 hover:bg-navy-900 text-white font-bold text-xs px-6 py-3 rounded-xl transition-colors mt-2 shadow-md"
-            >
-              Submit Another Enquiry
-            </button>
-          </motion.div>
-        ) : (
-          <motion.form 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            onSubmit={handleSubmit} 
-            className="space-y-6"
-          >
-            {submitError && (
-              <div className="p-4 bg-red-50 border border-red-200 rounded-xl flex items-center gap-3 text-red-700 text-sm font-medium">
-                <AlertCircle className="w-5 h-5 flex-shrink-0" />
-                <span>{submitError}</span>
-              </div>
-            )}
+          )}
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              
-              {/* Full Name */}
-              <div>
-                <label htmlFor="fullName" className="block text-xs font-extrabold text-navy-950 uppercase tracking-wider mb-2">
-                  Full Name <span className="text-red-500">*</span>
-                </label>
-                <input
-                  id="fullName"
-                  type="text"
-                  value={formData.fullName}
-                  onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
-                  placeholder="e.g. Rahul Sharma"
-                  className={`w-full bg-slate-50 border rounded-2xl px-4 py-3.5 text-sm font-medium text-navy-950 focus:outline-none focus:ring-2 transition-all ${
-                    errors.fullName ? 'border-red-500 focus:ring-red-500' : 'border-slate-300 focus:ring-royal-500 focus:bg-white'
-                  }`}
-                />
-                {errors.fullName && <p className="text-xs text-red-500 mt-1 font-medium">{errors.fullName}</p>}
-              </div>
-
-              {/* Phone Number */}
-              <div>
-                <label htmlFor="phone" className="block text-xs font-extrabold text-navy-950 uppercase tracking-wider mb-2">
-                  Phone Number <span className="text-red-500">*</span>
-                </label>
-                <input
-                  id="phone"
-                  type="tel"
-                  value={formData.phone}
-                  onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                  placeholder="+91 98765 43210"
-                  className={`w-full bg-slate-50 border rounded-2xl px-4 py-3.5 text-sm font-medium text-navy-950 focus:outline-none focus:ring-2 transition-all ${
-                    errors.phone ? 'border-red-500 focus:ring-red-500' : 'border-slate-300 focus:ring-royal-500 focus:bg-white'
-                  }`}
-                />
-                {errors.phone && <p className="text-xs text-red-500 mt-1 font-medium">{errors.phone}</p>}
-              </div>
-
-              {/* Email Address */}
-              <div>
-                <label htmlFor="email" className="block text-xs font-extrabold text-navy-950 uppercase tracking-wider mb-2">
-                  Email Address <span className="text-red-500">*</span>
-                </label>
-                <input
-                  id="email"
-                  type="email"
-                  value={formData.email}
-                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  placeholder="name@example.com"
-                  className={`w-full bg-slate-50 border rounded-2xl px-4 py-3.5 text-sm font-medium text-navy-950 focus:outline-none focus:ring-2 transition-all ${
-                    errors.email ? 'border-red-500 focus:ring-red-500' : 'border-slate-300 focus:ring-royal-500 focus:bg-white'
-                  }`}
-                />
-                {errors.email && <p className="text-xs text-red-500 mt-1 font-medium">{errors.email}</p>}
-              </div>
-
-              {/* City / Location */}
-              <div>
-                <label htmlFor="location" className="block text-xs font-extrabold text-navy-950 uppercase tracking-wider mb-2">
-                  City / Location <span className="text-red-500">*</span>
-                </label>
-                <input
-                  id="location"
-                  type="text"
-                  value={formData.location}
-                  onChange={(e) => setFormData({ ...formData, location: e.target.value })}
-                  placeholder="e.g. Akkulam, Thiruvananthapuram"
-                  className={`w-full bg-slate-50 border rounded-2xl px-4 py-3.5 text-sm font-medium text-navy-950 focus:outline-none focus:ring-2 transition-all ${
-                    errors.location ? 'border-red-500 focus:ring-red-500' : 'border-slate-300 focus:ring-royal-500 focus:bg-white'
-                  }`}
-                />
-                {errors.location && <p className="text-xs text-red-500 mt-1 font-medium">{errors.location}</p>}
-              </div>
-
-              {/* Service Interested In */}
-              <div>
-                <label htmlFor="serviceInterested" className="block text-xs font-extrabold text-navy-950 uppercase tracking-wider mb-2">
-                  What Can We Help You With? <span className="text-red-500">*</span>
-                </label>
-                <select
-                  id="serviceInterested"
-                  value={formData.serviceInterested}
-                  onChange={(e) => setFormData({ ...formData, serviceInterested: e.target.value })}
-                  className="w-full bg-slate-50 border border-slate-300 rounded-2xl px-4 py-3.5 text-sm font-medium text-navy-950 focus:outline-none focus:ring-2 focus:ring-royal-500 focus:bg-white transition-all"
-                >
-                  {servicesData.map((service) => (
-                    <option key={service.id} value={service.name}>
-                      {service.name} ({service.categoryLabel})
-                    </option>
-                  ))}
-                  <option value="Other Financial Service">Other Financial Service</option>
-                </select>
-              </div>
-
-              {/* Approximate Requirement Amount */}
-              <div>
-                <label htmlFor="requirementAmount" className="block text-xs font-extrabold text-navy-950 uppercase tracking-wider mb-2">
-                  Approximate Requirement (Optional)
-                </label>
-                <input
-                  id="requirementAmount"
-                  type="text"
-                  value={formData.requirementAmount}
-                  onChange={(e) => setFormData({ ...formData, requirementAmount: e.target.value })}
-                  placeholder="e.g. ₹25 Lakhs"
-                  className="w-full bg-slate-50 border border-slate-300 rounded-2xl px-4 py-3.5 text-sm font-medium text-navy-950 focus:outline-none focus:ring-2 focus:ring-royal-500 focus:bg-white transition-all"
-                />
-              </div>
-
-              {/* Employment Type */}
-              <div>
-                <label htmlFor="employmentType" className="block text-xs font-extrabold text-navy-950 uppercase tracking-wider mb-2">
-                  Employment / Business Profile
-                </label>
-                <select
-                  id="employmentType"
-                  value={formData.employmentType}
-                  onChange={(e) => setFormData({ ...formData, employmentType: e.target.value })}
-                  className="w-full bg-slate-50 border border-slate-300 rounded-2xl px-4 py-3.5 text-sm font-medium text-navy-950 focus:outline-none focus:ring-2 focus:ring-royal-500 focus:bg-white transition-all"
-                >
-                  <option value="Salaried">Salaried Employee</option>
-                  <option value="Self-Employed Professional">Self-Employed Professional (Doctor, CA, Architect)</option>
-                  <option value="Business Owner">Business Owner / Partner</option>
-                  <option value="Other">Other</option>
-                </select>
-              </div>
-
-              {/* Preferred Contact Method */}
-              <div>
-                <label htmlFor="preferredContactMethod" className="block text-xs font-extrabold text-navy-950 uppercase tracking-wider mb-2">
-                  Preferred Contact Method
-                </label>
-                <select
-                  id="preferredContactMethod"
-                  value={formData.preferredContactMethod}
-                  onChange={(e) => setFormData({ ...formData, preferredContactMethod: e.target.value })}
-                  className="w-full bg-slate-50 border border-slate-300 rounded-2xl px-4 py-3.5 text-sm font-medium text-navy-950 focus:outline-none focus:ring-2 focus:ring-royal-500 focus:bg-white transition-all"
-                >
-                  <option value="Phone">Phone Call</option>
-                  <option value="Email">Email</option>
-                </select>
-              </div>
-
-            </div>
-
-            {/* Additional Notes */}
-            <div>
-              <label htmlFor="message" className="block text-xs font-extrabold text-navy-950 uppercase tracking-wider mb-2">
-                Additional Requirement Details (Optional)
+          {/* Row 1: Name & Phone */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="space-y-1">
+              <label htmlFor={nameId} className="font-bold text-navy-950 block">
+                Full Name <span className="text-red-500">*</span>
               </label>
-              <textarea
-                id="message"
-                rows={3}
-                value={formData.message}
-                onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                placeholder="Provide any specific context or timeline details..."
-                className="w-full bg-slate-50 border border-slate-300 rounded-2xl px-4 py-3.5 text-sm font-medium text-navy-950 focus:outline-none focus:ring-2 focus:ring-royal-500 focus:bg-white transition-all"
+              <input
+                id={nameId}
+                type="text"
+                name="fullName"
+                required
+                value={formData.fullName}
+                onChange={handleChange}
+                placeholder="e.g. Rahul Nair"
+                className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-3 text-xs sm:text-sm font-medium text-navy-950 focus:bg-white focus:ring-2 focus:ring-royal-600 focus:outline-none"
               />
             </div>
 
-            {/* Required Disclaimer Acknowledgment */}
-            <div className="pt-2">
-              <label className="flex items-start gap-3 cursor-pointer">
-                <input
-                  type="checkbox"
-                  checked={formData.disclaimerAccepted}
-                  onChange={(e) => setFormData({ ...formData, disclaimerAccepted: e.target.checked })}
-                  className="mt-1 w-4 h-4 text-royal-600 rounded border-slate-300 focus:ring-royal-500"
-                />
-                <span className="text-xs text-slate-600 leading-normal font-normal">
-                  I understand that submitting this form does not guarantee loan approval or any specific financial product. Final terms depend on lender assessment. <span className="text-red-500">*</span>
-                </span>
+            <div className="space-y-1">
+              <label htmlFor={phoneId} className="font-bold text-navy-950 block">
+                Phone Number <span className="text-red-500">*</span>
               </label>
-              {errors.disclaimerAccepted && (
-                <p className="text-xs text-red-500 mt-1 font-medium">{errors.disclaimerAccepted}</p>
-              )}
+              <input
+                id={phoneId}
+                type="tel"
+                name="phone"
+                required
+                value={formData.phone}
+                onChange={handleChange}
+                placeholder="+91 98765 43210"
+                className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-3 text-xs sm:text-sm font-medium text-navy-950 focus:bg-white focus:ring-2 focus:ring-royal-600 focus:outline-none"
+              />
+            </div>
+          </div>
+
+          {/* Row 2: Email & Location */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="space-y-1">
+              <label htmlFor={emailId} className="font-bold text-navy-950 block">
+                Email Address
+              </label>
+              <input
+                id={emailId}
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                placeholder="rahul@example.com"
+                className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-3 text-xs sm:text-sm font-medium text-navy-950 focus:bg-white focus:ring-2 focus:ring-royal-600 focus:outline-none"
+              />
             </div>
 
-            {/* Submit CTA */}
+            <div className="space-y-1">
+              <label htmlFor={locationId} className="font-bold text-navy-950 block">
+                Your City / Location
+              </label>
+              <input
+                id={locationId}
+                type="text"
+                name="location"
+                value={formData.location}
+                onChange={handleChange}
+                placeholder="e.g. Thiruvananthapuram"
+                className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-3 text-xs sm:text-sm font-medium text-navy-950 focus:bg-white focus:ring-2 focus:ring-royal-600 focus:outline-none"
+              />
+            </div>
+          </div>
+
+          {/* Row 3: Service Choice & Loan Amount */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="space-y-1">
+              <label htmlFor={serviceId} className="font-bold text-navy-950 block">
+                Service Required
+              </label>
+              <select
+                id={serviceId}
+                name="serviceSlug"
+                value={formData.serviceSlug}
+                onChange={handleChange}
+                className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-3 text-xs sm:text-sm font-medium text-navy-950 focus:bg-white focus:ring-2 focus:ring-royal-600 focus:outline-none"
+              >
+                <option value="">General Financial Enquiry</option>
+                {activeServices.map((service) => (
+                  <option key={service.id} value={service.slug}>
+                    {service.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div className="space-y-1">
+              <label htmlFor={amountId} className="font-bold text-navy-950 block">
+                Approx Amount Needed (₹)
+              </label>
+              <input
+                id={amountId}
+                type="text"
+                name="loanAmount"
+                value={formData.loanAmount}
+                onChange={handleChange}
+                placeholder="e.g. 25 Lakhs"
+                className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-3 text-xs sm:text-sm font-medium text-navy-950 focus:bg-white focus:ring-2 focus:ring-royal-600 focus:outline-none"
+              />
+            </div>
+          </div>
+
+          {/* Row 4: Employment & Contact Method */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="space-y-1">
+              <label htmlFor={employmentId} className="font-bold text-navy-950 block">
+                Employment Profile
+              </label>
+              <select
+                id={employmentId}
+                name="employmentType"
+                value={formData.employmentType}
+                onChange={handleChange}
+                className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-3 text-xs sm:text-sm font-medium text-navy-950 focus:bg-white focus:ring-2 focus:ring-royal-600 focus:outline-none"
+              >
+                <option value="Salaried">Salaried Employee</option>
+                <option value="Self-Employed Professional">Self-Employed Professional</option>
+                <option value="Business Owner">Business Owner</option>
+                <option value="NRI">NRI (Non-Resident Indian)</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+
+            <div className="space-y-1">
+              <label htmlFor={methodId} className="font-bold text-navy-950 block">
+                Preferred Contact Method
+              </label>
+              <select
+                id={methodId}
+                name="preferredContactMethod"
+                value={formData.preferredContactMethod}
+                onChange={handleChange}
+                className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-3 text-xs sm:text-sm font-medium text-navy-950 focus:bg-white focus:ring-2 focus:ring-royal-600 focus:outline-none"
+              >
+                <option value="Phone">Direct Phone Call</option>
+                <option value="WhatsApp">WhatsApp Message</option>
+                <option value="Email">Email Communication</option>
+              </select>
+            </div>
+          </div>
+
+          {/* Message Textarea */}
+          <div className="space-y-1">
+            <label htmlFor={messageId} className="font-bold text-navy-950 block">
+              Additional Details / Requirement Notes
+            </label>
+            <textarea
+              id={messageId}
+              name="message"
+              rows={3}
+              value={formData.message}
+              onChange={handleChange}
+              placeholder="Tell us about your property location, business type, or specific timeline..."
+              className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-3 text-xs sm:text-sm font-medium text-navy-950 focus:bg-white focus:ring-2 focus:ring-royal-600 focus:outline-none resize-none"
+            />
+          </div>
+
+          {/* Disclosure Checkbox */}
+          <div className="pt-2">
+            <label htmlFor={consentId} className="flex items-start gap-2.5 cursor-pointer text-xs text-slate-600 leading-relaxed">
+              <input
+                id={consentId}
+                type="checkbox"
+                name="consentDisclaimer"
+                checked={formData.consentDisclaimer}
+                onChange={handleChange}
+                className="mt-0.5 w-4 h-4 rounded text-royal-600 focus:ring-royal-600 border-slate-300 flex-shrink-0"
+              />
+              <span>
+                I understand that submitting this form does not guarantee loan approval. Final sanction terms depend on partner lender policy assessment. <span className="text-red-500">*</span>
+              </span>
+            </label>
+          </div>
+
+          {/* Submit CTA */}
+          <div className="pt-2">
             <button
               type="submit"
-              disabled={isSubmitting}
-              className="w-full bg-gradient-to-r from-gold-500 via-gold-400 to-amber-500 hover:from-gold-400 hover:to-amber-400 text-navy-950 font-extrabold text-sm py-4 px-6 rounded-2xl shadow-glow-gold hover:shadow-xl transition-all flex items-center justify-center gap-2 disabled:opacity-50"
+              disabled={status === 'submitting'}
+              className="w-full bg-navy-950 hover:bg-navy-900 text-white font-extrabold text-sm py-3.5 px-6 rounded-xl shadow-md transition-all flex items-center justify-center gap-2 disabled:opacity-50 active:scale-[0.98] min-h-[44px]"
             >
-              {isSubmitting ? (
+              {status === 'submitting' ? (
                 <>
-                  <Loader2 className="w-5 h-5 animate-spin" />
-                  <span>Processing Enquiry...</span>
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                  <span>Submitting Enquiry...</span>
                 </>
               ) : (
                 <>
+                  <span>Send Enquiry to Royal Returns</span>
                   <Send className="w-4 h-4" />
-                  <span>Request a Consultation</span>
                 </>
               )}
             </button>
+          </div>
 
-            <div className="flex items-center justify-center gap-2 text-xs text-slate-500 pt-1 font-medium">
-              <ShieldCheck className="w-4 h-4 text-emerald-600" />
-              <span>Your details remain 100% confidential and are never sold to third-party telemarketers.</span>
-            </div>
-
-          </motion.form>
-        )}
-      </AnimatePresence>
-
+        </form>
+      )}
     </div>
   );
 };

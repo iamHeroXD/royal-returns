@@ -53,7 +53,7 @@ export default function RootLayout({
       <head>
         <SchemaJsonLd />
       </head>
-      <body className="min-h-screen flex flex-col antialiased bg-neutralBg text-navy-950 pb-16 lg:pb-0">
+      <body className="min-h-screen flex flex-col antialiased bg-warmBg text-navy-950 pb-28 lg:pb-0">
         <Navbar />
         <main className="flex-grow">{children}</main>
         <Footer />
