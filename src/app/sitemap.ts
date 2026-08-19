@@ -1,9 +1,10 @@
 import { MetadataRoute } from 'next';
-import { servicesData } from '@/data/servicesData';
+import { getActiveServices } from '@/data/servicesData';
 import { companyData } from '@/data/companyData';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = companyData.websiteUrl;
+  const activeServices = getActiveServices();
 
   const staticRoutes = [
     '',
@@ -21,7 +22,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: route === '' ? 1.0 : 0.8,
   }));
 
-  const serviceRoutes = servicesData.map((service) => ({
+  const serviceRoutes = activeServices.map((service) => ({
     url: `${baseUrl}services/${service.slug}`,
     lastModified: new Date(),
     changeFrequency: 'monthly' as const,

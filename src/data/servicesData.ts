@@ -10,7 +10,10 @@ export const servicesData: ServiceItem[] = [
     categoryLabel: 'Property Finance',
     shortDescription: 'Guidance and assistance for purchasing ready, under-construction, or resale residential properties.',
     iconName: 'Home',
-    overview: 'Purchasing a home is a milestone decision. Royal Returns helps you navigate home purchase loan options across reputed banking networks to find repayment terms suited to your budget.',
+    enabled: true,
+    verified: true,
+    featured: true,
+    overview: 'Purchasing a home is a major financial decision. Royal Returns helps you explore home purchase loan options across reputed banking networks to find repayment terms suited to your requirements.',
     useCases: [
       'Buying new ready-to-move apartment or house',
       'Purchasing under-construction residential properties',
@@ -45,6 +48,9 @@ export const servicesData: ServiceItem[] = [
     categoryLabel: 'Property Finance',
     shortDescription: 'Funding guidance for constructing your independent home on self-owned residential land.',
     iconName: 'Hammer',
+    enabled: true,
+    verified: true,
+    featured: true,
     overview: 'Building your own home requires staged financial planning. Construction loans disburse funds in tranches linked to construction milestones, helping manage cash flow effectively.',
     useCases: [
       'Constructing a custom house on owned plot',
@@ -79,6 +85,9 @@ export const servicesData: ServiceItem[] = [
     categoryLabel: 'Property Finance',
     shortDescription: 'Financial solutions for renovating, repairing, tiling, painting, or upgrading existing residential space.',
     iconName: 'Paintbrush',
+    enabled: true,
+    verified: true,
+    featured: false,
     overview: 'Give your existing residence a structural or interior upgrade. House improvement loans provide structured financing for renovations, interior work, and structural repairs.',
     useCases: [
       'Interior renovation and structural repair work',
@@ -112,6 +121,9 @@ export const servicesData: ServiceItem[] = [
     categoryLabel: 'Property Finance',
     shortDescription: 'Funding options for adding extra rooms, floors, or expanded living space to your existing home.',
     iconName: 'Maximize2',
+    enabled: true,
+    verified: true,
+    featured: false,
     overview: 'As your family grows, expand your existing home rather than moving. Extension loans finance vertical or horizontal additions to current residential properties.',
     useCases: [
       'Adding an extra floor or additional bedrooms',
@@ -144,6 +156,9 @@ export const servicesData: ServiceItem[] = [
     categoryLabel: 'Property Finance',
     shortDescription: 'Combined financial guidance for acquiring residential plot and constructing your house under a single arrangement.',
     iconName: 'MapPin',
+    enabled: true,
+    verified: true,
+    featured: true,
     overview: 'Simplify plot acquisition and building by combining both requirements into a single structured financial path, saving time and administrative hassle.',
     useCases: [
       'Buying residential land and starting construction within specified timeframe',
@@ -174,6 +189,9 @@ export const servicesData: ServiceItem[] = [
     categoryLabel: 'Property Finance',
     shortDescription: 'Unlock capital equity from your residential or commercial real estate for major business or personal needs.',
     iconName: 'Building2',
+    enabled: true,
+    verified: true,
+    featured: true,
     overview: 'Mortgage loan options leverage the market value of fully constructed property to secure multi-purpose funding at competitive interest rates compared to uncollateralized loans.',
     useCases: [
       'Business expansion and working capital injection',
@@ -192,13 +210,13 @@ export const servicesData: ServiceItem[] = [
     ],
     processSteps: [
       'Discuss collateral valuation and funding target',
-      'Identify ltv (Loan-to-Value) structures across lender network',
+      'Identify LTV structures across lender network',
       'Legal search and property valuation by lender',
       'Final credit sanction and mortgage deed execution'
     ]
   },
 
-  // --- LOANS (7 Services) ---
+  // --- LOANS & FUNDING (7 Services) ---
   {
     id: 'personal-loan',
     slug: 'personal-loan',
@@ -207,6 +225,9 @@ export const servicesData: ServiceItem[] = [
     categoryLabel: 'Loans & Funding',
     shortDescription: 'Unsecured personal loan guidance for sudden requirements, medical events, or family expenses.',
     iconName: 'UserCheck',
+    enabled: true,
+    verified: true,
+    featured: true,
     overview: 'Personal loans offer flexible, uncollateralized financing for personal priorities. Royal Returns guides applicants through lender criteria to match repayment comfort.',
     useCases: [
       'Emergency medical or family expenses',
@@ -238,6 +259,9 @@ export const servicesData: ServiceItem[] = [
     categoryLabel: 'Loans & Funding',
     shortDescription: 'Customized funding options for business growth, equipment acquisition, inventory, and operations.',
     iconName: 'Briefcase',
+    enabled: true,
+    verified: true,
+    featured: true,
     overview: 'Fuel business momentum with structured commercial loans. We help sole proprietors, firms, and companies explore unsecured and collateralized business credit options.',
     useCases: [
       'Working capital expansion and inventory bulk purchases',
@@ -269,6 +293,9 @@ export const servicesData: ServiceItem[] = [
     categoryLabel: 'Loans & Funding',
     shortDescription: 'Structured financing assistance for higher studies in India and abroad.',
     iconName: 'GraduationCap',
+    enabled: true,
+    verified: true,
+    featured: true,
     overview: 'Invest in educational aspirations without straining family savings. Explore education loan options covering tuition, living expenses, and travel for accredited programs.',
     useCases: [
       'Undergraduate and Postgraduate degrees in India',
@@ -300,6 +327,9 @@ export const servicesData: ServiceItem[] = [
     categoryLabel: 'Loans & Funding',
     shortDescription: 'Finance assistance for new or pre-owned four-wheelers and commercial vehicles.',
     iconName: 'Car',
+    enabled: true,
+    verified: true,
+    featured: false,
     overview: 'Drive your preferred vehicle with tailored auto loan choices. Royal Returns assists in comparing vehicle finance options for personal and commercial usage.',
     useCases: [
       'New passenger car purchases',
@@ -331,6 +361,9 @@ export const servicesData: ServiceItem[] = [
     categoryLabel: 'Loans & Funding',
     shortDescription: 'Combine multiple high-interest obligations into a single structured repayment plan.',
     iconName: 'Layers',
+    enabled: true,
+    verified: true,
+    featured: true,
     overview: 'Managing multiple monthly EMIs can be stressful. Loan consolidation options help unify debt commitments into a single structured loan with manageable monthly payouts.',
     useCases: [
       'Merging multiple credit card balances and high-interest personal loans',
@@ -362,6 +395,9 @@ export const servicesData: ServiceItem[] = [
     categoryLabel: 'Loans & Funding',
     shortDescription: 'Revolving credit options for businesses and self-employed individuals to manage cash flow.',
     iconName: 'CreditCard',
+    enabled: true,
+    verified: true,
+    featured: true,
     overview: 'An Overdraft facility provides flexible liquidity where interest is calculated only on the exact amount utilized for the exact duration of use.',
     useCases: [
       'Managing seasonal business cash flow fluctuations',
@@ -393,6 +429,9 @@ export const servicesData: ServiceItem[] = [
     categoryLabel: 'Loans & Funding',
     shortDescription: 'Comprehensive guidance for medium to large commercial and industrial development projects.',
     iconName: 'TrendingUp',
+    enabled: true,
+    verified: true,
+    featured: false,
     overview: 'Capital-intensive projects require specialized debt structuring. We assist entrepreneurs and companies in preparing financial proposals for project finance options.',
     useCases: [
       'Setting up new manufacturing units or commercial complexes',
@@ -417,7 +456,7 @@ export const servicesData: ServiceItem[] = [
     ]
   },
 
-  // --- SAVINGS (2 Services) ---
+  // --- SAVINGS OPTIONS (2 Services) ---
   {
     id: 'fixed-deposit',
     slug: 'fixed-deposit',
@@ -426,7 +465,10 @@ export const servicesData: ServiceItem[] = [
     categoryLabel: 'Savings Options',
     shortDescription: 'Explore term deposit solutions across partner banks and RBI-regulated financial institutions.',
     iconName: 'Lock',
-    overview: 'Grow your surplus capital securely. Fixed deposits offer guaranteed returns over a chosen tenure across top-rated banking and financial institutions.',
+    enabled: true,
+    verified: true,
+    featured: true,
+    overview: 'Grow your surplus capital securely. Fixed deposits offer predictable returns over a chosen tenure across top-rated banking and financial institutions.',
     useCases: [
       'Lump-sum capital preservation with predictable returns',
       'Senior citizen savings with higher yield potential',
@@ -457,6 +499,9 @@ export const servicesData: ServiceItem[] = [
     categoryLabel: 'Savings Options',
     shortDescription: 'Build disciplined monthly savings habits with structured recurring deposit options.',
     iconName: 'Clock',
+    enabled: true,
+    verified: true,
+    featured: false,
     overview: 'Accumulate capital systematically by depositing a fixed amount monthly. Ideal for building emergency funds or planning upcoming life events.',
     useCases: [
       'Disciplined monthly wealth building from regular income',
@@ -479,7 +524,7 @@ export const servicesData: ServiceItem[] = [
     ]
   },
 
-  // --- ADVISORY (5 Services - Marked Configurable) ---
+  // --- FINANCIAL GUIDANCE (5 Advisory Services - Configurable & Verified Flags) ---
   {
     id: 'loan-advisory',
     slug: 'loan-advisory',
@@ -488,6 +533,9 @@ export const servicesData: ServiceItem[] = [
     categoryLabel: 'Financial Guidance',
     shortDescription: 'Personalized evaluation of your financial requirement and borrowing eligibility across banking options.',
     iconName: 'FileText',
+    enabled: true,
+    verified: true,
+    featured: true,
     isAdvisoryConfirmationRequired: true,
     overview: 'Navigating loan markets can be overwhelming. Loan advisory provides structured profile analysis to help you understand suitable borrowing choices before applying.',
     useCases: [
@@ -518,6 +566,9 @@ export const servicesData: ServiceItem[] = [
     categoryLabel: 'Financial Guidance',
     shortDescription: 'Strategic guidance for individuals and small businesses to align cash flow with long-term goals.',
     iconName: 'Compass',
+    enabled: true,
+    verified: true,
+    featured: false,
     isAdvisoryConfirmationRequired: true,
     overview: 'Gain clarity on financial organization. We assist clients in evaluating debt structures, cash flow timing, and practical capital management.',
     useCases: [
@@ -545,6 +596,9 @@ export const servicesData: ServiceItem[] = [
     categoryLabel: 'Financial Guidance',
     shortDescription: 'Exploratory discussions on aligning surplus capital with structured financial goals.',
     iconName: 'PieChart',
+    enabled: true,
+    verified: false,
+    featured: false,
     isAdvisoryConfirmationRequired: true,
     overview: 'Understand basic investment vehicles and risk-return characteristics. (Note: Royal Returns provides general informational guidance; specific financial products depend on registered partner institutions).',
     useCases: [
@@ -571,6 +625,9 @@ export const servicesData: ServiceItem[] = [
     categoryLabel: 'Financial Guidance',
     shortDescription: 'Educational discussion on structuring post-retirement corpus and regular cash flow options.',
     iconName: 'ShieldCheck',
+    enabled: true,
+    verified: false,
+    featured: false,
     isAdvisoryConfirmationRequired: true,
     overview: 'Prepare for post-professional financial independence. Learn how guaranteed yield deposits and structured plans help maintain financial security in later years.',
     useCases: [
@@ -597,6 +654,9 @@ export const servicesData: ServiceItem[] = [
     categoryLabel: 'Financial Guidance',
     shortDescription: 'General overview of tax-saving avenues permissible under applicable Indian tax frameworks.',
     iconName: 'Calculator',
+    enabled: true,
+    verified: false,
+    featured: false,
     isAdvisoryConfirmationRequired: true,
     overview: 'Learn how housing loans, education loans, and specified deposits interact with tax savings provisions under applicable IT Act sections.',
     useCases: [
@@ -616,3 +676,6 @@ export const servicesData: ServiceItem[] = [
     ]
   }
 ];
+
+// Helper export to fetch only enabled services across the website
+export const getActiveServices = () => servicesData.filter((s) => s.enabled);

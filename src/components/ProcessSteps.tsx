@@ -17,14 +17,14 @@ export const ProcessSteps: React.FC = () => {
     },
     {
       num: '03',
-      title: 'Prepare & Apply',
-      desc: 'Gather standard KYC, income, or property documentation with guidance and submit your application.',
+      title: 'Review The Details',
+      desc: 'Gather standard KYC, income, or property documentation with guidance and review your application.',
       icon: FileCheck,
     },
     {
       num: '04',
-      title: 'Move Forward',
-      desc: 'The relevant lender or institution evaluates your profile, completes verification, and communicates the final sanction.',
+      title: 'Move Forward With Clarity',
+      desc: 'The relevant lender or institution evaluates your profile, completes verification, and communicates the final sanction decision.',
       icon: CheckCircle,
     },
   ];
@@ -36,28 +36,28 @@ export const ProcessSteps: React.FC = () => {
         return (
           <div 
             key={idx} 
-            className="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm relative flex flex-col justify-between"
+            className="bg-white rounded-3xl p-6 border border-slate-200 shadow-sm flex flex-col justify-between space-y-4 hover:border-royal-500/40 transition-colors"
           >
             <div>
               <div className="flex items-center justify-between mb-4">
-                <span className="text-3xl font-black text-royal-600/30 font-sans tracking-tight">
+                <span className="text-3xl font-black text-royal-600 font-mono tracking-tight">
                   {step.num}
                 </span>
-                <div className="w-10 h-10 rounded-xl bg-royal-50 text-royal-600 flex items-center justify-center">
+                <div className="w-10 h-10 rounded-2xl bg-royal-50 text-royal-600 flex items-center justify-center border border-royal-100">
                   <IconComp className="w-5 h-5" />
                 </div>
               </div>
 
-              <h3 className="font-bold text-navy-900 text-base mb-2">
+              <h3 className="font-extrabold text-navy-950 text-base mb-2">
                 {step.title}
               </h3>
 
-              <p className="text-slate-600 text-xs leading-relaxed">
+              <p className="text-slate-600 text-xs leading-relaxed font-normal">
                 {step.desc}
               </p>
             </div>
 
-            <div className="w-full h-1 bg-royal-600/20 rounded-full mt-6 overflow-hidden">
+            <div className="w-full h-1 bg-slate-100 rounded-full mt-4 overflow-hidden">
               <div 
                 className="bg-royal-600 h-full rounded-full" 
                 style={{ width: `${(idx + 1) * 25}%` }} 
