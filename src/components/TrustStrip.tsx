@@ -1,4 +1,7 @@
+'use client';
+
 import React from 'react';
+import { motion } from 'framer-motion';
 import { UserCheck, Layers, Landmark, HeartHandshake } from 'lucide-react';
 
 export const TrustStrip: React.FC = () => {
@@ -28,15 +31,19 @@ export const TrustStrip: React.FC = () => {
   return (
     <div className="bg-slate-50 border-y border-slate-200/80 py-8 text-navy-950">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
           {points.map((pt, i) => {
             const IconComponent = pt.icon;
             return (
-              <div
+              <motion.div
                 key={i}
-                className="flex items-start gap-4 p-4 rounded-2xl bg-white border border-slate-200 shadow-sm"
+                initial={{ opacity: 0, y: 15 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-30px" }}
+                transition={{ duration: 0.5, delay: i * 0.1 }}
+                className="flex items-start gap-3.5 p-4 rounded-2xl bg-white border border-slate-200/90 shadow-xs hover:border-royal-500/40 hover:shadow-subtle transition-all duration-300"
               >
-                <div className="p-3 rounded-xl bg-slate-100 border border-slate-200 text-royal-600 flex-shrink-0">
+                <div className="p-2.5 rounded-xl bg-slate-100 border border-slate-200 text-royal-600 flex-shrink-0">
                   <IconComponent className="w-5 h-5" />
                 </div>
                 <div>
@@ -47,7 +54,7 @@ export const TrustStrip: React.FC = () => {
                     {pt.desc}
                   </p>
                 </div>
-              </div>
+              </motion.div>
             );
           })}
         </div>

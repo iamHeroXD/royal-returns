@@ -1,4 +1,7 @@
+'use client';
+
 import React from 'react';
+import { motion } from 'framer-motion';
 
 export const WhyUsSection: React.FC = () => {
   const principles = [
@@ -28,7 +31,13 @@ export const WhyUsSection: React.FC = () => {
     <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
       
       {/* Editorial Headline */}
-      <div className="max-w-3xl space-y-3">
+      <motion.div 
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-40px" }}
+        transition={{ duration: 0.6 }}
+        className="max-w-3xl space-y-3"
+      >
         <span className="text-xs font-mono tracking-widest text-royal-600 uppercase font-bold">
           CORE PRINCIPLES
         </span>
@@ -37,25 +46,29 @@ export const WhyUsSection: React.FC = () => {
           Thoughtful options.<br />
           No unnecessary complexity.
         </h2>
-      </div>
+      </motion.div>
 
       {/* Numbered 4-Block Principles Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {principles.map((p) => (
-          <div
+        {principles.map((p, idx) => (
+          <motion.div
             key={p.num}
-            className="bg-white rounded-3xl p-8 border border-slate-200 shadow-sm flex flex-col justify-between space-y-4 hover:border-royal-500/40 transition-colors"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-40px" }}
+            transition={{ duration: 0.5, delay: idx * 0.1 }}
+            className="bg-white rounded-3xl p-8 border border-slate-200 shadow-xs flex flex-col justify-between space-y-4 hover:border-royal-500/40 hover:shadow-subtle transition-all duration-300 group"
           >
             <div className="space-y-3">
-              <span className="text-3xl font-black text-royal-600 font-mono tracking-tight">
+              <span className="text-3xl font-black text-royal-600 font-mono tracking-tight group-hover:scale-110 transition-transform origin-left block">
                 {p.num}
               </span>
-              <h3 className="text-xl font-extrabold text-navy-950">{p.title}</h3>
+              <h3 className="text-xl font-extrabold text-navy-950 group-hover:text-royal-600 transition-colors">{p.title}</h3>
               <p className="text-slate-600 text-sm leading-relaxed font-normal">
                 {p.desc}
               </p>
             </div>
-          </div>
+          </motion.div>
         ))}
       </div>
 

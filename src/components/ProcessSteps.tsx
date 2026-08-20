@@ -1,4 +1,7 @@
+'use client';
+
 import React from 'react';
+import { motion } from 'framer-motion';
 import { MessageSquarePlus, Search, FileCheck, CheckCircle } from 'lucide-react';
 
 export const ProcessSteps: React.FC = () => {
@@ -34,21 +37,25 @@ export const ProcessSteps: React.FC = () => {
       {steps.map((step, idx) => {
         const IconComp = step.icon;
         return (
-          <div 
-            key={idx} 
-            className="bg-white rounded-3xl p-6 border border-slate-200 shadow-sm flex flex-col justify-between space-y-4 hover:border-royal-500/40 transition-colors"
+          <motion.div 
+            key={idx}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-40px" }}
+            transition={{ duration: 0.5, delay: idx * 0.1 }}
+            className="bg-white rounded-3xl p-6 border border-slate-200 shadow-xs flex flex-col justify-between space-y-4 hover:border-royal-500/40 hover:shadow-subtle transition-all duration-300 group"
           >
             <div>
               <div className="flex items-center justify-between mb-4">
-                <span className="text-3xl font-black text-royal-600 font-mono tracking-tight">
+                <span className="text-3xl font-black text-royal-600 font-mono tracking-tight group-hover:scale-110 transition-transform origin-left">
                   {step.num}
                 </span>
-                <div className="w-10 h-10 rounded-2xl bg-royal-50 text-royal-600 flex items-center justify-center border border-royal-100">
+                <div className="w-10 h-10 rounded-2xl bg-royal-50 text-royal-600 flex items-center justify-center border border-royal-100 group-hover:bg-royal-600 group-hover:text-white transition-colors">
                   <IconComp className="w-5 h-5" />
                 </div>
               </div>
 
-              <h3 className="font-extrabold text-navy-950 text-base mb-2">
+              <h3 className="font-extrabold text-navy-950 text-base mb-2 group-hover:text-royal-600 transition-colors">
                 {step.title}
               </h3>
 
@@ -58,12 +65,15 @@ export const ProcessSteps: React.FC = () => {
             </div>
 
             <div className="w-full h-1 bg-slate-100 rounded-full mt-4 overflow-hidden">
-              <div 
+              <motion.div 
+                initial={{ width: 0 }}
+                whileInView={{ width: `${(idx + 1) * 25}%` }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, delay: 0.2 + idx * 0.1 }}
                 className="bg-royal-600 h-full rounded-full" 
-                style={{ width: `${(idx + 1) * 25}%` }} 
               />
             </div>
-          </div>
+          </motion.div>
         );
       })}
     </div>
